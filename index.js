@@ -3,7 +3,15 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
                                         //https://hastebin.com/kawomanica.js
                                         //https://hastebin.com/iweboleqek.bash
-let status = [
+/** heroku login
+    git init
+    heroku git:remote NomeDoAppHeroku
+
+    git add .
+    git commit -am "qualquer coisa"
+    git push heroku master */
+
+    let status = [
  
     { name: 'prefix($), GG WP!', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
  
@@ -42,13 +50,15 @@ client.on("message", message => { //abertura do client.on("message", async messa
 const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
   const comando = args.shift().toLowerCase();
   
-    if(comando === "ping") {
+     if(comando === "ping") {
         message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
     }
+
+   
     
     if(comando === "kick") {
         //adicione o nome dos cargos que vc quer que use esse comando!
-            if(!message.member.roles.some(r=>["DONOS", "Nome de outro cargo 2"].includes(r.name)) )
+            if(!message.member.roles.some(r=>["Legendary", "MOD", "Sênior Member"].includes(r.name)) )
               return message.reply("Desculpe, você não tem permissão para usar isto!");
             let member = message.mentions.members.first() || message.guild.members.get(args[0]);
             if(!member)
@@ -77,7 +87,7 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
         message.channel.send(HugEmbed)
     }
   
-    if(message.content === `!reiniciar`) {
+    if(message.content === `$reiniciar`) {
         resetBot(message.channel)
             async function resetBot(channel) {
                 channel.send(`Reiniciando...`)
