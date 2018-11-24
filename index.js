@@ -1,7 +1,8 @@
 const config = require("./config.json");
 const Discord = require('discord.js');
 const client = new Discord.Client();
- 
+                                        //https://hastebin.com/kawomanica.js
+                                        //https://hastebin.com/iweboleqek.bash
 let status = [
  
     { name: 'prefix($), GG WP!', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
@@ -33,7 +34,7 @@ client.on('ready', () => {
   
     setStatus();
  
-    setInterval(() => setStatus(), 10000); //{1000/1s}\{10000/10s}\{100000/1m}
+    setInterval(() => setStatus(), 500000); //{1000/1s}\{10000/10s}\{100000/1m}
   
 });
 client.on("message", message => { //abertura do client.on("message", async message =>
@@ -42,7 +43,7 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
   const comando = args.shift().toLowerCase();
   
     if(comando === "ping") {
-    message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
+        message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
     }
     
     if(comando === "kick") {
