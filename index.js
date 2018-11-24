@@ -50,8 +50,14 @@ client.on("message", message => { //abertura do client.on("message", async messa
 const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
   const comando = args.shift().toLowerCase();
   
-     if(comando === "ping") {
-        message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
+    //if(comando === "ping") {
+    //    message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
+    //}
+
+    if (comando === "ping") {
+        const calculando =  message.channel.send("Calculando...");
+    
+        calculando.edit(`Pong! :ping_pong:\nLatency é **${calculando.createdTimestamp - message.createdTimestamp}**ms.\nAPI Latency é **${Math.round(client.ping)}**ms!`);
     }
 
    
