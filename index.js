@@ -1,108 +1,144 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
 const config = require("./config.json");
+const Discord = require('discord.js');
+const client = new Discord.Client();
+ 
+let status = [
+ 
+    { name: 'prefix($), GG WP!', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
+ 
+    { name: `_Megadeth42`, type: 'STREAMING', url: 'https://twitch.tv/megadeth42' },
+  
+    { name: 'https.fb.com/NerdStrike', type: 'STREAMING', url: 'https://facebook.com/NerdStrike' },
 
-client.on("ready", () => {
-    console.log(`Bot foi iniciado, com ${client.users.size} usuários, em ${client.channels.size} canals, em ${client.guilds.size} servidores.`);
-});
+    { name: 'prefixo: $', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
 
-client.on("guildCreate", guild => {
-    console.log(`O bot entrou nos servidores: ${guild.name} (id: ${guild.id}. População: ${guild.memberCount} membros!`);
-    client.user.setActivity(`Estou em ${client.guilds.size} servidores.`);
-});
+    { name: `LucasDdz`, type: 'STREAMING', url: 'https://twitch.tv/LucasDdZ' },
 
-client.on("guildDelete", guild => {
-    console.log(`O bot foi removido do servidor: ${guild.name} (id: ${guild.id})`);
-    client.user.setActivity(`Serving ${client.guilds.size} servers`);
-});
-
-client.on("guildMemberAdd", member => {
-
-  if (member.guild.id !== "ID DA SUA GUILD") return; //coloquei aqui o id da sua guild
-  let avatar = member.user.avatarURL;
-  let embed = new Discord.RichEmbed()
-      .setColor("#3fdb20")
-      .setThumbnail(avatar)
-      .setDescription(`${member}, bem vindo(a)! ao servidor :tada:`)
-      .addField('Você é o membro de número:', member.guild.memberCount)
-      .setTimestamp(new Date())
-      .setFooter(member.guild.name, member.guild.iconURL)
-    client.channels.get("ID DO CANAL").send(embed); //coloque aqui o id do cana que o bot vai mandar a msg
-    
-    let embed2 = new Discord.RichEmbed()
-    .setDescription(`${member}, bem vindo ao servidor ${member.guild.name} :tada:z\nvocê é o membro de número ${member.guild.memberCount}`)
-    .setImage(member.guild.iconURL)
-    .setTimestamp(new Date())
-    .setColor("#ff9d00")
-    .setFooter(`${bot.user.tag}`, client.user.displayAvatarURL)
-   member.send(embed2);  //envia a msg no pv do membro que entrou
-})
-
-client.on("message", async message =>{
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
-
-    const args = message.content.slice(config.prefix.lenght).trim().split(/ +/g);
-    const comando = args.shift().toLowerCase();
-
-    if(comando === "ping"){
-        const m = await message.channel.send("Ping?");
-        m.edit(`Pong! A Latência é ${m.createdTimestamp - message.createdTimestamp}ms. A Latência da API é ${Math.round(client.ping)}ms`);
+    { name: 'Draco', type: 'STREAMING', url: 'https://twitch.tv/DracoAmorzim' },
+ 
+];
+ 
+ 
+client.on('ready', () => {
+ 
+    console.log('Bot conectado com sucesso!');
+  
+    function setStatus() {
+ 
+        let randomStatus = status[Math.floor(Math.random() * status.length)];
+ 
+        client.user.setPresence({ game: randomStatus });
+ 
     }
-    //comando falar
-  if(comando === "say") { 
-    const sayMessage = args.join(" ");
-    message.delete().catch(O_o=>{});  
-    message.channel.send(sayMessage);
-  }
-    //comando apagar
-  if(comando === "apagar") {
-    const deleteCount = parseInt(args[0], 10);
-    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-      return message.reply("Por favor, forneça um número entre 2 e 100 para o número de mensagens a serem excluídas");
-    
-    const fetched = await message.channel.fetchMessages({limit: deleteCount});
-    message.channel.bulkDelete(fetched)
-      .catch(error => message.reply(`Não foi possível deletar mensagens devido a: ${error}`));
-  }
-
-   
-  // comando chutar 
-  if(comando === "kick") {
-//adicione o nome dos cargos que vc quer que use esse comando!
-    if(!message.member.roles.some(r=>["Nome do cargo 1", "Nome de outro cargo 2"].includes(r.name)) )
-      return message.reply("Desculpe, você não tem permissão para usar isto!");
-    let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-    if(!member)
-      return message.reply("Por favor mencione um membro válido deste servidor");
-    if(!member.kickable) 
-      return message.reply("Eu não posso expulsar este usuário! Eles pode ter um cargo mais alto ou eu não tenho permissões de expulsar?");
-    
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "Nenhuma razão fornecida";
-    
-    await member.kick(reason)
-      .catch(error => message.reply(`Desculpe ${message.author} não consegui expulsar o membro devido o: ${error}`));
-    message.reply(`${member.user.tag} foi kickado por ${message.author.tag} Motivo: ${reason}`);
-
-  }
-  // comando ban
-  if(comando === "ban") {
-    //adicione o nome do cargo que vc quer que use esse comando!
-    if(!message.member.roles.some(r=>["Nome do cargo"].includes(r.name)) )
-      return message.reply("Desculpe, você não tem permissão para usar isto!");
-    let member = message.mentions.members.first();
-    if(!member)
-      return message.reply("Por favor mencione um membro válido deste servidor");
-    if(!member.bannable) 
-      return message.reply("Eu não posso banir este usuário! Eles pode ter um cargo mais alto ou eu não tenho permissões de banir?");
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "Nenhuma razão fornecida";
-    await member.ban(reason)
-      .catch(error => message.reply(`Desculpe ${message.author} não consegui banir o membro devido o : ${error}`));
-    message.reply(`${member.user.tag} foi banido por ${message.author.tag} Motivo: ${reason}`);
-  }
-    
+  
+    setStatus();
+ 
+    setInterval(() => setStatus(), 10000); //{1000/1s}\{10000/10s}\{100000/1m}
+  
 });
-
+client.on("message", message => { //abertura do client.on("message", async message =>
+ 
+const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
+  const comando = args.shift().toLowerCase();
+  
+    if(comando === "ping") {
+    message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
+    }
+    
+    if(comando === "kick") {
+        //adicione o nome dos cargos que vc quer que use esse comando!
+            if(!message.member.roles.some(r=>["DONOS", "Nome de outro cargo 2"].includes(r.name)) )
+              return message.reply("Desculpe, você não tem permissão para usar isto!");
+            let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+            if(!member)
+              return message.reply("Por favor mencione um membro válido deste servidor");
+            if(!member.kickable)
+              return message.reply("Eu não posso expulsar este usuário! Eles pode ter um cargo mais alto ou eu não tenho permissões de expulsar?");
+           
+            let reason = args.slice(1).join(' ');
+            if(!reason) reason = "Nenhuma razão fornecida";
+           
+         member.kick(reason)
+              .catch(error => message.reply(`Desculpe ${message.author} não consegui expulsar o membro devido o: ${error}`));
+            message.reply(`${member.user.tag} foi kickado por ${message.author.tag} Motivo: ${reason}`);
+    }        
+  
+    if(comando === "abraçar") {
+        let user = message.mentions.users.first();
+        if(message.mentions.users.size < 1) return message.reply("Você precisa mencionar alguém.")
+        if(user.id == message.author.id) return message.reply("Você não pode abraçar a si mesmo.")
+        var HugEmbed = new Discord.RichEmbed()
+        .setColor('#8B008B')
+        .setTitle(`**${message.author.username}** deu um abraço no(a) **${user.username}**`)
+        .setImage('https://media.giphy.com/media/xJlOdEYy0r7ZS/giphy.gif')
+        .setFooter(`Pedido por ${message.author.tag}`, message.author.avatarURL).setTimestamp()
+   
+        message.channel.send(HugEmbed)
+    }
+  
+    if(message.content === `!reiniciar`) {
+        resetBot(message.channel)
+            async function resetBot(channel) {
+                channel.send(`Reiniciando...`)
+                .then(msg => client.destroy(true))
+                .then(() => client.login(config.token));
+             }
+   
+        client.on('ready', () => {
+            message.channel.send(`Bot reiniciado com sucesso!`);
+        });
+    }
+    
+    if(comando === "ban") {
+        var razão = args.slice(1).join(" ")
+ 
+    var usuario = message.mentions.users.first();
+    if(!message.guild.member(message.author.id).hasPermissions("BAN_MEMBERS")) return message.reply("Você não tem permissão de usar esse comando")
+    if(message.mentions.users.size < 1) return message.reply("Você não mencionou ninguém")
+    if(!message.guild.member(usuario).bannable) return message.reply("Eu não posso banir essa pessoa.")
+    if(razão.length < 1) return message.reply("Você não colocou uma razão.")  
+ 
+    message.guild.member(usuario).ban()
+ 
+   var discord = require ('discord.js')
+ 
+   var embed = new discord.RichEmbed()
+   .setTitle("**Usuário banido do server**")
+   .setColor("#36393e")
+   .setTimestamp()
+   .addField("Staff: " , message.author.username, true)
+   .addField("Usuário: " , usuario.username,true)
+   .addField("ID: " , usuario.id,true)
+   .setThumbnail(message.author.displayAvatarURL)
+   .addField("<a<a:BlobBanHammer:471788559402139668>471788559402139668>Razão: " , razão, true);
+ 
+   message.channel.send(embed)
+    }
+ 
+    if(comando === "unban") {
+    if(!message.guild.me.hasPermission(0x00000004)) return message.channel.send({embed: {
+        description: `Eu não tenho a permissão para desbanir membros.`
+    }})
+    let member = args[0]
+    let reason = args.slice(1).join(" ")
+    if(!reason) {
+        reason = "Não informado. '-'"
+    }
+    if(!member) return message.channel.send({embed: {
+        description: `Você não me disse o membro que tenho que desbanir. .-.`,  
+ }})
+    message.guild.unban(member).then(() => {
+        message.channel.send({embed: {
+            title: `Membro desbanido!`,
+            fields: [
+                {
+                    name: "Motivo: ",
+                    value: `${reason}`
+                }
+            ]
+        }})
+      })
+    }
+ });
+ 
 client.login(config.token);
