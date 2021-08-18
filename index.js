@@ -1,19 +1,22 @@
 const config = require("./config.json");
 const Discord = require('discord.js');
-const client = new Discord.Client();
-                                        //https://hastebin.com/kawomanica.js
-                                        //https://hastebin.com/iweboleqek.bash
-/** heroku login
+const client = new Discord.Client();    
+                                        //https://hastebin.com/evafoperas.js - MEU CÓDIGO
+                                        //https://hastebin.com/kawomanica.js - MENSAGEM AUTOMÁTICA DE BEM-VINDO
+                                        //https://hastebin.com/iweboleqek.bash - CRIANÇÃO DE CMD BÁSICO
+                                        //https://hastebin.com/equrajumej.js - PING
+                                        //https://hastebin.com/enodeqiwed.js - NOVO PING
+/** heroku login - UPDATE HEROKU
     git init
     heroku git:remote NomeDoAppHeroku
 
     git add .
-    git commit -am "qualquer coisa"
+    git commit -am "URAHARA 2.0.4"
     git push heroku master */
 
     let status = [
  
-    { name: 'prefix($), GG WP!', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
+    { name: 'Use $ - Nerd Strike', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
  
     { name: `_Megadeth42`, type: 'STREAMING', url: 'https://twitch.tv/megadeth42' },
   
@@ -29,39 +32,113 @@ const client = new Discord.Client();
  
  
 client.on('ready', () => {
- 
+
     console.log('Bot conectado com sucesso!');
   
     function setStatus() {
- 
         let randomStatus = status[Math.floor(Math.random() * status.length)];
- 
         client.user.setPresence({ game: randomStatus });
- 
     }
   
     setStatus();
- 
     setInterval(() => setStatus(), 500000); //{1000/1s}\{10000/10s}\{100000/1m}
   
 });
-client.on("message", message => { //abertura do client.on("message", async message =>
- 
+
+client.on('guildMemberAdd', member => {
+    if (member.guild.id !== "ID DA GUILD") return;
+    let avatar = member.user.avatarURL
+    let embed = new Discord.RichEmbed()
+        .setColor('#98c688')
+        .setThumbnail(avatar)
+        .setTitle("**Messagem de bem-vindo**")
+        .addField('Bem vindo(a)!', `Bem vindo(a) ${member} Ao servidor :)`)
+        .setFooter(`Membro que entrou no server: ${member}`)
+        .addField('Você é o membro de numero:', member.guild.memberCount)
+        .setDescription("May the force be with you.")
+        .setTimestamp()
+    client.channels.get('ID DO CANAL').send(embed)
+  });
+
+client.on("message", async message => { //abertura do client.on("message", async message =>
 const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
   const comando = args.shift().toLowerCase();
-  
-    //if(comando === "ping") {
-    //    message.reply(`:ping_pong: **|** Aproximadamente ${Math.round(client.ping)}ms!`);
-    //}
+  if(!message.content.startsWith("$"))return;
 
-    if (comando === "ping") {
-        const calculando =  message.channel.send("Calculando...");
-    
-        calculando.edit(`Pong! :ping_pong:\nLatency é **${calculando.createdTimestamp - message.createdTimestamp}**ms.\nAPI Latency é **${Math.round(client.ping)}**ms!`);
+    //-------------------------COMANDO HELP-------------------------
+    if (comando === "help") {
+        let embed = new Discord.RichEmbed()
+        .setTitle("LISTA DE COMANDOS")
+        .addField("Comando: ban", "banir um usuário")
+        .addField("Comando: unban", "desbanir um usuário")
+        .addField("Comando: ping", "É o ping porra '-'")
+        .addField("Comando: kick", "chutar membro do servidor")
+        .addField("Comando: serverinfo", "informações do servidor")
+        .addField("Comando: avatar", "imprime o ícone do perfil ou de outros")
+        .addField("Comando: abraçar", "lança um giphy de abraço")
+        .addField("Comando: date", "mostra a quantidade de dias no servidor")
+        .addField("Comando: help_pv", "envia os comandos no chat")
+        .setColor("#98c688")
+        .setThumbnail(client.user.avatarURL)
+        message.channel.send(embed); //se quiser enviar no pv coloca message.author.send(embed);
     }
 
-   
-    
+    //-------------------------COMANDO HELPPV-------------------------
+    if (comando === "help_pv") {
+        let embed = new Discord.RichEmbed()
+        .setTitle("LISTA DE COMANDOS")
+        .addField("Comando: ban", "banir um usuário")
+        .addField("Comando: unban", "desbanir um usuário")
+        .addField("Comando: ping", "É o ping porra '-'")
+        .addField("Comando: kick", "chutar membro do servidor")
+        .addField("Comando: serverinfo", "informações do servidor")
+        .addField("Comando: avatar", "imprime o ícone do perfil ou de outros")
+        .addField("Comando: abraçar", "lança um giphy de abraço")
+        .addField("Comando: date", "mostra a quantidade de dias no servidor")
+        .setColor("#98c688")
+        .setThumbnail(client.user.avatarURL)
+        message.author.send(embed);
+    }
+
+    //-------------------------COMANDO PING-------------------------
+    if (comando === "ping") {
+        const embed = new Discord.RichEmbed()
+        
+        .setColor('#98c688')
+        .setDescription(`:mega:**${message.author.tag}**, :ping_pong: a latência da API é ${Math.round(client.ping)}`)
+        .setFooter('Comando Ping')
+        .setTimestamp(new Date())
+        message.channel.send('', embed)
+    }
+
+    //-------------------------COMANDO SERVERINFO-------------------------
+    if(comando === 'serverinfo'){
+        const moment = require("moment")
+        moment.locale("pt-BR")
+        let online = message.guild.members.filter(a => a.presence.status == "online").size;
+        let ocupado = message.guild.members.filter(a => a.presence.status == "dnd").size;
+        let ausente = message.guild.members.filter(a => a.presence.status == "idle").size;
+        let offline = message.guild.members.filter(a => a.presence.status == "offline").size;
+        let client = message.guild.members.filter(a => a.user.client).size;
+        let totalmembros = message.guild.memberCount;
+        let canaistexto = message.guild.channels.filter(a => a.type === "text").size;
+        let canaisvoz = message.guild.channels.filter(a => a.type === "voice").size;
+        let cargos = message.guild.roles.map(a => a.name).join(", ")
+            const embed = new Discord.RichEmbed()
+            .setTitle(`Informações do servidor: ${message.guild.name}:registered:`)
+            .setColor("#98c688")
+            .addField('Dono', `<@${message.guild.owner.id}>`)
+            .addField('Criado em:', `:date: ${moment(message.guild.createdAt).format('LLLL')}`)
+            .addField("ID", `:hash:${message.guild.id}`)
+            .addField(`Membros [${totalmembros}]`, `Online: ${online}\nAusente: ${ausente}\n :red_circle:Ocupado: ${ocupado}\n :black_circle:Offline: ${offline}\n :robot:Bots: ${client.Date}`)
+            .addField(`Canais [${canaistexto+canaisvoz}]`, `:pencil:Texto: ${canaistexto}\n:sound:Voz: ${canaisvoz}`)
+            .addField(`Cargos [${message.guild.roles.size}]`, cargos)
+            .setThumbnail(message.guild.iconURL)
+            .setFooter(`Pedido por ${message.author.tag}`, message.author.avatarURL)
+            message.channel.send(embed)
+    }
+
+    //-------------------------COMANDO KICK-------------------------
     if(comando === "kick") {
         //adicione o nome dos cargos que vc quer que use esse comando!
             if(!message.member.roles.some(r=>["Legendary", "MOD", "Sênior Member"].includes(r.name)) )
@@ -78,21 +155,42 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
          member.kick(reason)
               .catch(error => message.reply(`Desculpe ${message.author} não consegui expulsar o membro devido o: ${error}`));
             message.reply(`${member.user.tag} foi kickado por ${message.author.tag} Motivo: ${reason}`);
-    }        
-  
+    } 
+
+    //-------------------------COMANDO AVATAR-------------------------
+    if(comando === 'avatar') {
+        let member = message.mentions.users.first() || client.users.get(args[0]) || message.author;
+            let avatar = member.displayAvatarURL;
+            if (avatar.endsWith(".gif")) {
+                avatar = `${member.displayAvatarURL}?size=2048`
+            }
+            message.channel.send({
+                embed: {
+                    title: `:camera_with_flash: **${member.tag}**`,
+                    description: `[DOWNLOAD](${avatar})`,
+                    image: {
+                        url: avatar
+                    }
+                }
+            })
+        }
+
+
+    //-------------------------COMANDO ABRAÇAR-------------------------
     if(comando === "abraçar") {
         let user = message.mentions.users.first();
         if(message.mentions.users.size < 1) return message.reply("Você precisa mencionar alguém.")
         if(user.id == message.author.id) return message.reply("Você não pode abraçar a si mesmo.")
         var HugEmbed = new Discord.RichEmbed()
-        .setColor('#8B008B')
+        .setColor('#98c688')
         .setTitle(`**${message.author.username}** deu um abraço no(a) **${user.username}**`)
         .setImage('https://media.giphy.com/media/xJlOdEYy0r7ZS/giphy.gif')
         .setFooter(`Pedido por ${message.author.tag}`, message.author.avatarURL).setTimestamp()
    
         message.channel.send(HugEmbed)
     }
-  
+    
+    //-------------------------COMANDO REINICIAR-------------------------
     if(message.content === `$reiniciar`) {
         resetBot(message.channel)
             async function resetBot(channel) {
@@ -106,6 +204,7 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
         });
     }
     
+    //-------------------------COMANDO BAN-------------------------
     if(comando === "ban") {
         var razão = args.slice(1).join(" ")
  
@@ -121,7 +220,7 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
  
    var embed = new discord.RichEmbed()
    .setTitle("**Usuário banido do server**")
-   .setColor("#36393e")
+   .setColor("#98c688")
    .setTimestamp()
    .addField("Staff: " , message.author.username, true)
    .addField("Usuário: " , usuario.username,true)
@@ -131,7 +230,8 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
  
    message.channel.send(embed)
     }
- 
+    
+    //-------------------------COMANDO UNBAN-------------------------
     if(comando === "unban") {
     if(!message.guild.me.hasPermission(0x00000004)) return message.channel.send({embed: {
         description: `Eu não tenho a permissão para desbanir membros.`
@@ -156,6 +256,17 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
         }})
       })
     }
+    //-------------------------COMANDO REGISTRO DE DIAS-------------------------
+    if(comando === "date"){
+        let owo = message.guild.member(message.mentions.users.first() || client.users.get(args[0]) || message.author);
+
+        let embed = new Discord.RichEmbed();
+        embed.setColor("#98c688");
+        embed.setDescription(`${message.author}, a conta do usuário providenciado existe há **${Math.round(Math.abs((owo.user.createdAt.getTime() - new Date().getTime())/(24*60*60*1000)))} dias**.`);
+
+        client.channels.get(message.channel.id).send(embed);
+    }
+    //-------------------------FIM DO CÓDIGO-------------------------
  });
  
 client.login(config.token);
