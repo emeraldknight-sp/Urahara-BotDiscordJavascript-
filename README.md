@@ -1,11 +1,11 @@
-<h1 align="center">Welcome to Urahara-DiscordBot 👋</h1>
+<h1 align="center">Welcome to Urahara-DiscordBot 🤖</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/emeraldknight-sp/Urahara-DiscordBot" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="https://twitter.com/twitter.com\/EmeraldKKKKKK" target="_blank">
-    <img alt="Twitter: twitter.com\/EmeraldKKKKKK" src="https://img.shields.io/twitter/follow/twitter.com\/EmeraldKKKKKK.svg?style=social" />
+  <a href="https://twitter.com/EmeraldKKKKKK" target="_blank">
+    <img alt="Twitter: EmeraldKKKKKK" src="https://img.shields.io/twitter/follow/EmeraldKKKKKK.svg?style=social" />
   </a>
 </p>
 
@@ -41,9 +41,9 @@ discordapp.com/oauth2/authorize?=&client_id=513030234493419540&scope=bot&permiss
 👤 **EmeraldKnight (David Almeida)**
 
 * Website: instagram.com/_emeraldknight
-* Twitter: [@twitter.com\/EmeraldKKKKKK](https://twitter.com/twitter.com\/EmeraldKKKKKK)
+* Twitter: [@twitter.com/EmeraldKKKKKK](https://twitter.com/EmeraldKKKKKK)
 * Github: [@emeraldknight-sp](https://github.com/emeraldknight-sp)
-* LinkedIn: [@br.linkedin.com\/in\/david-almeida-6069351a](https://linkedin.com/in/br.linkedin.com\/in\/david-almeida-6069351a)
+* LinkedIn: [@br.linkedin.com/in/david-almeida-6069351a](https://linkedin.com/in/br.linkedin.com/in/david-almeida-6069351a)
 
 ## Show your support
 
