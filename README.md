@@ -32,6 +32,7 @@ npm run test
 ```
 
 ## Add bot in a server like a ADM
+
 ```
 discordapp.com/oauth2/authorize?=&client_id=513030234493419540&scope=bot&permissions=8
 ´´´
@@ -51,3 +52,4 @@ Give a ⭐️ if this project helped you!
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+```
