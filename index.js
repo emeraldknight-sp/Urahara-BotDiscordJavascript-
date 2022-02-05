@@ -16,6 +16,8 @@ dotenv.config()
     git commit -am "URAHARA 2.0.4"
     git push heroku master */
 
+    const prefix = "|";
+
     let status = [
  
     { name: 'Use / - Nerd Strike', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
@@ -63,7 +65,7 @@ client.on('guildMemberAdd', member => {
   });
 
 client.on("message", async message => { //abertura do client.on("message", async message =>
-    const args = message.content.slice(dotenv.prefix.length).trim().split(/ +/g); //definindo os argumentos.
+    const args = message.content.slice(prefix.length).trim().split(/ +/g); //definindo os argumentos.
     const comando = args.shift().toLowerCase();
     if(!message.content.startsWith("$"))return;
 
