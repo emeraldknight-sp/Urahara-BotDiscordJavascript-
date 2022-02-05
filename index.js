@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require("./config.json");
 const dotenv = require("dotenv")
 dotenv.config()
     
@@ -64,7 +63,7 @@ client.on('guildMemberAdd', member => {
   });
 
 client.on("message", async message => { //abertura do client.on("message", async message =>
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
+    const args = message.content.slice(dotenv.prefix.length).trim().split(/ +/g); //definindo os argumentos.
     const comando = args.shift().toLowerCase();
     if(!message.content.startsWith("$"))return;
 
