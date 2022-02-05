@@ -1,6 +1,9 @@
-const config = require("./config.json");
 const Discord = require('discord.js');
-const client = new Discord.Client();    
+const client = new Discord.Client();
+const config = require("./config.json");
+const dotenv = require("dotenv")
+dotenv.config()
+    
                                         //https://hastebin.com/evafoperas.js - MEU CÓDIGO
                                         //https://hastebin.com/kawomanica.js - MENSAGEM AUTOMÁTICA DE BEM-VINDO
                                         //https://hastebin.com/iweboleqek.bash - CRIANÇÃO DE CMD BÁSICO
@@ -16,32 +19,32 @@ const client = new Discord.Client();
 
     let status = [
  
-    { name: 'Use $ - Nerd Strike', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
+    { name: 'Use / - Nerd Strike', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
  
-    { name: `_Megadeth42`, type: 'STREAMING', url: 'https://twitch.tv/megadeth42' },
+    { name: `_emeraldknight`, type: 'STREAMING', url: 'https://twitch.tv/emeraldknightofc' },
   
     { name: 'https.fb.com/NerdStrike', type: 'STREAMING', url: 'https://facebook.com/NerdStrike' },
 
-    { name: 'prefixo: $', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
+    { name: 'prefixo: /', type: 'STREAMING', url: 'https://www.youtube.com/channel/UCwZYI1VnymmuL424TeWoFRw' },
 
     { name: `LucasDdz`, type: 'STREAMING', url: 'https://twitch.tv/LucasDdZ' },
 
-    { name: 'Draco', type: 'STREAMING', url: 'https://twitch.tv/DracoAmorzim' },
+    { name: `Está com ${client.users.size} usuários, em ${client.channels.size} canais, em ${client.guilds.size} servidores!` }
  
 ];
  
  
 client.on('ready', () => {
-
     console.log('Bot conectado com sucesso!');
-  
+    // console.log(`Está com ${client.users.size} usuários, em ${client.channels.size} canais, em ${client.guilds.size} servidores!`);
     function setStatus() {
         let randomStatus = status[Math.floor(Math.random() * status.length)];
         client.user.setPresence({ game: randomStatus });
+        // client.user.setPresence(`Eu estou em ${client.guilds.size} servidores!`);
     }
   
     setStatus();
-    setInterval(() => setStatus(), 500000); //{1000/1s}\{10000/10s}\{100000/1m}
+    setInterval(() => setStatus(), 10000); //{1000/1s}\{10000/10s}\{100000/1m}
   
 });
 
@@ -52,7 +55,7 @@ client.on('guildMemberAdd', member => {
         .setColor('#98c688')
         .setThumbnail(avatar)
         .setTitle("**Messagem de bem-vindo**")
-        .addField('Bem vindo(a)!', `Bem vindo(a) ${member} Ao servidor :)`)
+        .addField('Bem vindo(a)!', `Bem vindo(a) ${member} ao servidor :)`)
         .setFooter(`Membro que entrou no server: ${member}`)
         .addField('Você é o membro de numero:', member.guild.memberCount)
         .setDescription("May the force be with you.")
@@ -61,40 +64,40 @@ client.on('guildMemberAdd', member => {
   });
 
 client.on("message", async message => { //abertura do client.on("message", async message =>
-const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
-  const comando = args.shift().toLowerCase();
-  if(!message.content.startsWith("$"))return;
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //definindo os argumentos.
+    const comando = args.shift().toLowerCase();
+    if(!message.content.startsWith("$"))return;
 
     //-------------------------COMANDO HELP-------------------------
     if (comando === "help") {
         let embed = new Discord.RichEmbed()
         .setTitle("LISTA DE COMANDOS")
-        .addField("Comando: ban", "banir um usuário")
-        .addField("Comando: unban", "desbanir um usuário")
-        .addField("Comando: ping", "É o ping porra '-'")
-        .addField("Comando: kick", "chutar membro do servidor")
-        .addField("Comando: serverinfo", "informações do servidor")
-        .addField("Comando: avatar", "imprime o ícone do perfil ou de outros")
-        .addField("Comando: abraçar", "lança um giphy de abraço")
-        .addField("Comando: date", "mostra a quantidade de dias no servidor")
-        .addField("Comando: help_pv", "envia os comandos no chat")
+        .addField("Comando: ban", "Banir um usuário")
+        .addField("Comando: unban", "Desbanir um usuário")
+        .addField("Comando: ping", "Descubra se o seu ping está alto ou baixo")
+        .addField("Comando: kick", "Chutar membro do servidor")
+        .addField("Comando: serverinfo", "Informações do servidor")
+        .addField("Comando: avatar", "Imprime o ícone do perfil ou de outros")
+        .addField("Comando: abraçar", "Lança um giphy de abraço")
+        .addField("Comando: date", "Mostra a quantidade de dias no servidor")
+        .addField("Comando: helpmsg", "Envia os comandos no chat")
         .setColor("#98c688")
         .setThumbnail(client.user.avatarURL)
         message.channel.send(embed); //se quiser enviar no pv coloca message.author.send(embed);
     }
 
     //-------------------------COMANDO HELPPV-------------------------
-    if (comando === "help_pv") {
+    if (comando === "helpmsg") {
         let embed = new Discord.RichEmbed()
         .setTitle("LISTA DE COMANDOS")
-        .addField("Comando: ban", "banir um usuário")
-        .addField("Comando: unban", "desbanir um usuário")
-        .addField("Comando: ping", "É o ping porra '-'")
-        .addField("Comando: kick", "chutar membro do servidor")
-        .addField("Comando: serverinfo", "informações do servidor")
-        .addField("Comando: avatar", "imprime o ícone do perfil ou de outros")
-        .addField("Comando: abraçar", "lança um giphy de abraço")
-        .addField("Comando: date", "mostra a quantidade de dias no servidor")
+        .addField("Comando: ban", "Banir um usuário")
+        .addField("Comando: unban", "Desbanir um usuário")
+        .addField("Comando: ping", "Descubra se seu ping está alto ou baixo")
+        .addField("Comando: kick", "Chutar membro do servidor")
+        .addField("Comando: serverinfo", "Informações do servidor")
+        .addField("Comando: avatar", "Imprime o ícone do perfil ou de outros")
+        .addField("Comando: abraçar", "Lança um giphy de abraço")
+        .addField("Comando: date", "Mostra a quantidade de dias no servidor")
         .setColor("#98c688")
         .setThumbnail(client.user.avatarURL)
         message.author.send(embed);
@@ -105,11 +108,15 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
         const embed = new Discord.RichEmbed()
         
         .setColor('#98c688')
-        .setDescription(`:mega:**${message.author.tag}**, :ping_pong: a latência da API é ${Math.round(client.ping)}`)
+        .setDescription(`:mega:**${message.author.tag}**, :ping_pong: a latência da API é ${Math.round(client.ping)}ms.`)
         .setFooter('Comando Ping')
         .setTimestamp(new Date())
         message.channel.send('', embed)
     }
+
+    if(comando === "pingg") {
+        const m = await message.channel.send(`Pong! A Latência é ${m.createdTimestamp - message.createdTimestamp}ms. A Latencia da API é ${Math.round(client.ping)}ms`);
+      }
 
     //-------------------------COMANDO SERVERINFO-------------------------
     if(comando === 'serverinfo'){
@@ -269,4 +276,4 @@ const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //
     //-------------------------FIM DO CÓDIGO-------------------------
  });
  
-client.login(config.token);
+client.login(process.env.token);

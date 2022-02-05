@@ -1,18 +1,26 @@
 {
   "name": "Urahara",
   "version": "1.0.0",
-  "description": "",
+  "description": "<h1 align=\"center\">Welcome to Urahara-DiscordBot 👋</h1> <p>   <img alt=\"Version\" src=\"https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000\" />   <a href=\"https://github.com/emeraldknight-sp/Urahara-DiscordBot\" target=\"_blank\">     <img alt=\"Documentation\" src=\"https://img.shields.io/badge/documentation-yes-brightgreen.svg\" />   </a>   <a href=\"https://twitter.com/twitter.com\\/EmeraldKKKKKK\" target=\"_blank\">     <img alt=\"Twitter: twitter.com\\/EmeraldKKKKKK\" src=\"https://img.shields.io/twitter/follow/twitter.com\\/EmeraldKKKKKK.svg?style=social\" />   </a> </p>",
   "main": "index.js",
+  "dependencies": {
+    "discord.js": "^11.6.4",
+    "dotenv": "^16.0.0",
+    "init": "^0.1.2",
+    "moment": "^2.22.2"
+  },
   "scripts": {
-    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emeraldknight-sp/Urahara-BotDiscordJavascript-.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "discord.js": "^11.4.2",
-    "init": "^0.1.2",
-    "moment": "^2.22.2"
-  }
+  "bugs": {
+    "url": "https://github.com/emeraldknight-sp/Urahara-BotDiscordJavascript-/issues"
+  },
+  "homepage": "https://github.com/emeraldknight-sp/Urahara-BotDiscordJavascript-#readme"
 }
